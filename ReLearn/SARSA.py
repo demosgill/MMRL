@@ -27,7 +27,7 @@ class SARSA:
         self.q_table[state][action] += self.alpha * (target - self.q_table[state][action])
 
     def train(self, episodes=1000):
-        for episode in range(episodes):
+        for i in range(self.iterations):
             state = self.env.reset()
             action = self.choose_action(state)
             done = False
@@ -41,7 +41,7 @@ class SARSA:
 
     def evaluate(self):
         total_pnl = 0
-        for episode in range(self.iterations):
+        for i in range(self.iterations):
             state = self.env.reset()
             done = False
             while not done:

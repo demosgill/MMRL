@@ -9,17 +9,19 @@ class QLearner:
     Using Q-Learning to maximise PnL via optimal quoting: MM Problem
     """
     def __init__(self, env, learning_rate=0.1, discount_factor=0.8, exploration_rate=0.1):
-        self.env = env
+        self.env = env  # OB Simulated environment (use gym for more sophistication or syntheticOB.py)
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.exploration_rate = exploration_rate
-        self.q_values = defaultdict(lambda: np.zeros(3))
+        self.q_values = defaultdict(lambda: np.zeros(3))  # initialized to zeros for each state-action pair.
         self.iterations = 100
 
 
     def choose_action(self, state):
         """
         Chooses an action based on an epsilon-greedy policy
+        E.g. With probability epsilon (exploration rate), selects a random action from [0, 1, 2]
+        Otherwise, selects the action with the highest Q-value for the given state
         """
         if random.uniform(0, 1) < self.exploration_rate:
             return random.choice([0, 1, 2])
@@ -29,35 +31,41 @@ class QLearner:
     def update_q_table(self, state, action, reward, next_state):
         """
         Updates the Q-values using the Bellman equation (see EQ. 3.12 Sutton' book).
-        :param state: Current state of things
-        :param action: Action one should take
-        :param reward: The reward for taking such action
-        :param next_state: Update Q-Matrix
         """
-        # Get the best future action
+        # Find the best action for the next state
         best_future_action = np.argmax(self.q_values[next_state])
 
-        # Get target
+        # Calculate the target Q-value
         target = reward + self.discount_factor * self.q_values[next_state][best_future_action]
 
-        # increment
+        # Calculate the temporal difference error
         delta = target - self.q_values[state][action]
 
-        # Update q_values
+        # Update the Q-value for the current state-action pair
         self.q_values[state][action] += self.learning_rate * delta
 
     def train(self):
         """
         Train agent
         """
-        for episode in range(self.iterations):
+        # Training the Q-learning agent over a specified number of iterations
+        for i in range(self.iterations):
+
+            # Reset the environment to start a new episode
             state = self.env.reset()
             done = False
 
             while not done:
+                # Choose action using epsilon-greedy policy
                 action = self.choose_action(state)
+
+                # Interact with the environment
                 next_state, reward, done, _ = self.env.step(action)
+
+                # Update Q-values based on observed transition
                 self.update_q_table(state, action, reward, next_state)
+
+                # Define next state
                 state = next_state
 
     def evaluate(self):
