@@ -20,7 +20,7 @@ class QLearner:
     def choose_action(self, state):
         """
         Chooses an action based on an epsilon-greedy policy
-        E.g. With probability epsilon (exploration rate), selects a random action from [0, 1, 2]
+        Eg: With probability epsilon (exploration rate), selects a random action from [0, 1, 2]
         Otherwise, selects the action with the highest Q-value for the given state
         """
         if random.uniform(0, 1) < self.exploration_rate:
