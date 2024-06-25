@@ -1,12 +1,11 @@
 import numpy as np
 import random
 from collections import defaultdict
-from ReLearn.MarketEnv import MarketEnv
-
+from MarketEnv import MarketEnv
 
 class SARSA:
     """
-    Using SARSA to maximise PnL via optimal quoting: MM Problem
+    SARSA agent for the Market Making problem
     """
     def __init__(self, env, alpha=0.1, gamma=0.8, epsilon=0.1):
         self.env = env
@@ -14,7 +13,6 @@ class SARSA:
         self.gamma = gamma
         self.epsilon = epsilon
         self.q_table = defaultdict(lambda: np.zeros(3))
-        self.iterations = 100
 
 
     def choose_action(self, state):
@@ -52,23 +50,19 @@ class SARSA:
         average_pnl = total_pnl / episodes
         print(f"Average PnL over {episodes} evaluation episodes: {average_pnl:.2f}")
 
-
 def main():
-    """
-    main function for evaluating a given policy via QLearning
-    """
     # Instantiate Market environment Class
-    EV = MarketEnv()
+    env = MarketEnv()
 
-    # instantiate the QL Class
-    AG = SARSA(EV)
+    # Instantiate the SARSA Agent
+    agent = SARSA(env)
 
-    # Train
-    AG.train()
+    # Train the agent
+    agent.train()
 
-    # Test the agent
-    AG.evaluate()
-
+    # Evaluate the agent
+    agent.evaluate()
 
 if __name__ == "__main__":
     main()
+
