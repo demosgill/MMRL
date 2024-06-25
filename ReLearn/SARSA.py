@@ -13,6 +13,7 @@ class SARSA:
         self.gamma = gamma
         self.epsilon = epsilon
         self.q_table = defaultdict(lambda: np.zeros(3))
+        self.iterations = 100
 
 
     def choose_action(self, state):
@@ -38,17 +39,17 @@ class SARSA:
                 state = next_state
                 action = next_action
 
-    def evaluate(self, episodes=100):
+    def evaluate(self):
         total_pnl = 0
-        for episode in range(episodes):
+        for episode in range(self.iterations):
             state = self.env.reset()
             done = False
             while not done:
                 action = np.argmax(self.q_table[state])
                 state, reward, done, _ = self.env.step(action)
             total_pnl += self.env.profit_loss
-        average_pnl = total_pnl / episodes
-        print(f"Average PnL over {episodes} evaluation episodes: {average_pnl:.2f}")
+        average_pnl = total_pnl / self.iterations
+        print(f"Average PnL over {self.iterations} evaluation episodes: {average_pnl:.2f}")
 
 def main():
     # Instantiate Market environment Class
