@@ -6,6 +6,5 @@ setup(
     packages=[
         'ReLearn'
     ],
-    url='www.github.com/demosgill',
-    author='G. Demos'
+    author='GDemos'
 )
