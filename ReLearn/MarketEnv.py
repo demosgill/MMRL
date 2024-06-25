@@ -4,12 +4,13 @@ import random
 
 class MarketEnv:
     """
-    Create a simple market environment
+    Create a simple market environment for testing purposes
     """
     def __init__(self, start_price=100, price_step=1):
         self.start_price = start_price
         self.price_step = price_step
         self.reset()
+
 
     def reset(self):
         """
