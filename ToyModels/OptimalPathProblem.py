@@ -70,6 +70,7 @@ class QLearning:
         """
         current_state_row = R[state,]
         av_act = np.where(current_state_row >= 0)[1]
+
         return av_act
 
     def sample_next_action(self, available_act):
@@ -136,7 +137,7 @@ def main():
     QL = QLearning()
 
     # Which node is our objective?
-    print(f'Algorithm Aim: Achieve Noce {QL.goal_node}')
+    print(f'Algorithm Aim: reach node {QL.goal_node}')
 
     # Plot the graph with paths the algorithms can follow.
     QL.plot_graph()
