@@ -8,15 +8,16 @@ class QLearner:
     """
     Using Q-Learning to maximise PnL via optimal quoting: MM Problem
     """
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.99, exploration_rate=0.1):
+    def __init__(self, env, learning_rate=0.1, discount_factor=0.8, exploration_rate=0.1):
         self.env = env
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.exploration_rate = exploration_rate
-        self.q_values = defaultdict(lambda: np.zeros(3))  # 3 possible actions: 0, 1, 2
+        self.q_values = defaultdict(lambda: np.zeros(3))
         self.iterations = 100
 
-    def select_action(self, state):
+
+    def choose_action(self, state):
         """
         Chooses an action based on an epsilon-greedy policy
         """
@@ -25,7 +26,7 @@ class QLearner:
         else:
             return np.argmax(self.q_values[state])
 
-    def update_q_values(self, state, action, reward, next_state):
+    def update_q_table(self, state, action, reward, next_state):
         """
         Updates the Q-values using the Bellman equation (see EQ. 3.12 Sutton' book).
         :param state: Current state of things
@@ -33,12 +34,19 @@ class QLearner:
         :param reward: The reward for taking such action
         :param next_state: Update Q-Matrix
         """
+        # Get the best future action
         best_future_action = np.argmax(self.q_values[next_state])
+
+        # Get target
         target = reward + self.discount_factor * self.q_values[next_state][best_future_action]
+
+        # increment
         delta = target - self.q_values[state][action]
+
+        # Update q_values
         self.q_values[state][action] += self.learning_rate * delta
 
-    def train_agent(self):
+    def train(self):
         """
         Train agent
         """
@@ -47,12 +55,12 @@ class QLearner:
             done = False
 
             while not done:
-                action = self.select_action(state)
+                action = self.choose_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                self.update_q_values(state, action, reward, next_state)
+                self.update_q_table(state, action, reward, next_state)
                 state = next_state
 
-    def evaluate_agent(self):
+    def evaluate(self):
         """
         Test agent
         """
@@ -79,10 +87,10 @@ def main():
     AG = QLearner(EV)
 
     # Train
-    AG.train_agent()
+    AG.train()
 
     # Test the agent
-    AG.evaluate_agent()
+    AG.evaluate()
 
 
 if __name__ == "__main__":

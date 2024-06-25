@@ -18,7 +18,7 @@ class MarketEnv:
         self.price = self.start_price
         self.inventory = 0
         self.profit_loss = 0
-        self.time = 0
+        self.iteration = 0
         return self._get_state()
 
     def _get_state(self):
@@ -44,9 +44,9 @@ class MarketEnv:
 
         self.price += np.random.normal()
         self.profit_loss += self.inventory * (self.price - self.start_price)
-        self.time += 1
+        self.iteration += 1
 
-        done = self.time >= 100
+        done = self.iteration >= 100
         reward = self.profit_loss
         state = self._get_state()
 
