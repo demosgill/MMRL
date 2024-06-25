@@ -8,11 +8,11 @@ class QLearner:
     """
     Using Q-Learning to maximise PnL via optimal quoting: MM Problem
     """
-    def __init__(self, env, learning_rate=0.1, discount_factor=0.8, exploration_rate=0.1):
+    def __init__(self, env, learning_rate=0.2, discount_factor=0.5, exploration_rate=0.9):
         self.env = env  # OB Simulated environment (use gym for more sophistication or syntheticOB.py)
-        self.learning_rate = learning_rate
-        self.discount_factor = discount_factor
-        self.exploration_rate = exploration_rate
+        self.learning_rate = learning_rate  # what extent newly acquired information overrides old information
+        self.discount_factor = discount_factor  # importance of future rewards compared to immediate rewards
+        self.exploration_rate = exploration_rate  # Defines the tradeoff between exploration and exploitation
         self.q_values = defaultdict(lambda: np.zeros(3))  # initialized to zeros for each state-action pair.
         self.iterations = 100
 
