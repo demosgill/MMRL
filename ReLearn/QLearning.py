@@ -51,7 +51,7 @@ class QLearner:
         # Training the Q-learning agent over a specified number of iterations
         for i in range(self.iterations):
 
-            # Reset the environment to start a new episode
+            # Reset the environment to start a new iteration
             state = self.env.reset()
             done = False
 
@@ -72,14 +72,26 @@ class QLearner:
         """
         Test agent
         """
+        # Evaluating the trained Q-learning agent over a specified number of episodes to measure its performance
         cumulative_pnl = 0
-        for episode in range(self.iterations):
+        for i in range(self.iterations):
+
+            # Reset the environment to start a new iteration
             state = self.env.reset()
             done = False
+
             while not done:
+
+                # Choose action greedily according to learned Q-values
                 action = np.argmax(self.q_values[state])
+
+                # Interact with the environment
                 state, reward, done, _ = self.env.step(action)
+
+            # Accumulate the total profit and loss over all iterations
             cumulative_pnl += self.env.profit_loss
+
+        # get avg pnl
         average_pnl = cumulative_pnl / self.iterations
         print(f"Average PnL over {self.iterations} evaluation episodes: {average_pnl:.2f}")
 
