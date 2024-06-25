@@ -3,13 +3,10 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-"""
-
-Reinforcement Learning Toy Problem using Q-Learn
-
-"""
-
 class QLearning:
+    """
+    Reinforcement Learning Toy Problem using QLearning
+    """
     def __init__(self):
         self.points_list = [(0, 1), (1, 5), (5, 6), (5, 4), (1, 2), (2, 3), (2, 7)]  # Define points on a 2-D plane
         self.goal_node = 7  # our goal is to reach Number 7 via the best path

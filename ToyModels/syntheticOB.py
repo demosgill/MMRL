@@ -2,6 +2,9 @@ import heapq
 import random
 
 
+"""
+Example of a synthetic order book construction
+"""
 class Order:
     def __init__(self, order_id, side, price, quantity):
         self.order_id = order_id
