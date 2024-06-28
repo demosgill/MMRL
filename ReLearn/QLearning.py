@@ -9,7 +9,7 @@ class QLearner:
     Using Q-Learning to maximise PnL via optimal quoting: MM Problem
     """
     def __init__(self, env, learning_rate=0.2, discount_factor=0.5, exploration_rate=0.9):
-        self.env = env  # OB Simulated environment (use gym for more sophistication or syntheticOB.py)
+        self.env = env  # OB Simulated environment (use gym for more sophistication or RealisticMarketEnv.py)
         self.learning_rate = learning_rate  # what extent newly acquired information overrides old information
         self.discount_factor = discount_factor  # importance of future rewards compared to immediate rewards
         self.exploration_rate = exploration_rate  # Defines the tradeoff between exploration and exploitation
