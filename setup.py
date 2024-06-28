@@ -4,7 +4,8 @@ setup(
     name='RL for MM',
     version='0.0.1',
     packages=[
-        'ReLearn'
+        'ReLearn',
+        'ToyModels'
     ],
     author='GDemos'
 )
