@@ -1,7 +1,3 @@
-Sure, here's a description for your README.md file:
-
----
-
 ## Package Overview
 
 This package provides two main modules designed to aid in understanding and applying fundamental concepts in financial modeling and reinforcement learning.
